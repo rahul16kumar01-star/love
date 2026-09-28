@@ -320,6 +320,10 @@ button {
         <button class="no" onclick="noClicked()">
             Let me think 😌
         </button>
+
+            <button onclick="noClicked()">😅 NO
+            </button>
+        
     </div>
 
 </div>
@@ -343,7 +347,6 @@ button {
     
     });
     
-    
     function sendAnswer(answer) {
     
         fetch(GOOGLE_SCRIPT_URL, {
@@ -357,10 +360,8 @@ button {
     
     }
     
-    
     function yesClicked() {
     
-        // Google Sheet में YES भेजना
         sendAnswer("YES");
     
         letter.innerHTML = `
@@ -383,13 +384,24 @@ button {
     
     }
     
-    
     function noClicked() {
     
-        // Google Sheet में NO भेजना
         sendAnswer("NO");
     
-        alert("Take your time... I'll wait ❤️😊");
+        letter.innerHTML = `
+            <h1>It's Okay ❤️</h1>
+    
+            <div style="font-size:70px;">
+                🌹🙂
+            </div>
+    
+            <p class="message">
+                Thank you for being honest. ❤️
+                <br><br>
+                I respect your decision.
+                Take care and always stay happy. 😊
+            </p>
+        `;
     
     }
     
