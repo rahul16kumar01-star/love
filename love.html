@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Little Surprise ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffd6e0, #fff0f5);
+    font-family: Georgia, serif;
+    overflow: hidden;
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -30px;
+    color: #ff4d6d;
+    font-size: 20px;
+    animation: float 7s linear infinite;
+    opacity: .7;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    20% { opacity: 1; }
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Envelope */
+.envelope-container {
+    position: relative;
+    width: 360px;
+    height: 250px;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.envelope {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #f8a5b9;
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.2);
+}
+
+/* Bottom flap */
+.envelope::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-left: 180px solid transparent;
+    border-right: 180px solid transparent;
+    border-bottom: 130px solid #ef8da6;
+}
+
+/* Top flap */
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 180px solid transparent;
+    border-right: 180px solid transparent;
+    border-top: 140px solid #ffb3c6;
+    transform-origin: top;
+    transition: transform 1s ease;
+    z-index: 5;
+}
+
+/* Heart seal */
+.seal {
+    position: absolute;
+    left: 50%;
+    top: 105px;
+    transform: translateX(-50%);
+    width: 55px;
+    height: 55px;
+    background: #e63956;
+    z-index: 10;
+    rotate: -45deg;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.25);
+    transition: .5s;
+}
+
+.seal::before,
+.seal::after {
+    content: "";
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background: #e63956;
+    border-radius: 50%;
+}
+
+.seal::before {
+    top: -27px;
+    left: 0;
+}
+
+.seal::after {
+    left: 27px;
+    top: 0;
+}
+
+.seal span {
+    position: absolute;
+    color: white;
+    font-size: 25px;
+    z-index: 20;
+    rotate: 45deg;
+    left: 18px;
+    top: 15px;
+}
+
+.envelope-container.open .flap {
+    transform: rotateX(180deg);
+}
+
+.envelope-container.open .seal {
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+}
+
+/* Rose */
+.rose {
+    position: absolute;
+    left: 50%;
+    top: 35px;
+    transform: translateX(-50%) scale(0);
+    font-size: 75px;
+    z-index: 20;
+    transition: 1s;
+}
+
+.envelope-container.open .rose {
+    transform: translateX(-50%) translateY(-110px) scale(1);
+}
+
+/* Letter */
+.letter {
+    position: fixed;
+    width: min(90%, 500px);
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #fffaf0;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.3);
+    text-align: center;
+    transform: scale(0);
+    opacity: 0;
+    transition: 1s;
+    z-index: 50;
+}
+
+.letter.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.letter h1 {
+    color: #d63350;
+    margin-top: 0;
+}
+
+.photo {
+    width: 100%;
+    max-width: 350px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 10px auto 20px;
+    display: block;
+}
+
+.message {
+    font-size: 19px;
+    line-height: 1.7;
+    color: #4a2c32;
+}
+
+.question {
+    font-size: 25px;
+    color: #d63350;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.yes {
+    background: #e63956;
+    color: white;
+}
+
+.yes:hover {
+    transform: scale(1.1);
+}
+
+.no {
+    background: #ddd;
+}
+
+.instruction {
+    position: absolute;
+    bottom: -55px;
+    width: 100%;
+    text-align: center;
+    color: #8b4354;
+    font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background hearts -->
+<div class="heart" style="left:10%;animation-delay:0s;">❤️</div>
+<div class="heart" style="left:25%;animation-delay:2s;">💕</div>
+<div class="heart" style="left:45%;animation-delay:4s;">❤️</div>
+<div class="heart" style="left:70%;animation-delay:1s;">💗</div>
+<div class="heart" style="left:90%;animation-delay:3s;">❤️</div>
+
+
+<!-- Envelope -->
+<div class="envelope-container" id="envelope">
+
+    <div class="envelope"></div>
+
+    <div class="flap"></div>
+
+    <div class="rose">🌹</div>
+
+    <div class="seal">
+        <span>♥</span>
+    </div>
+
+    <div class="instruction">
+        Tap the ❤️ seal
+    </div>
+
+</div>
+
+
+<!-- Letter -->
+<div class="letter" id="letter">
+
+    <h1>For Someone Special ❤️</h1>
+
+    <!-- Placeholder photo -->
+    <img
+        class="photo"
+        src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80"
+        alt="Love"
+    >
+
+    <div class="message">
+
+        <p>
+            I don't know exactly when it happened...
+            but somewhere along the way,
+            you became someone really special to me. ❤️
+        </p>
+
+        <p>
+            Your smile makes my day better,
+            your presence makes ordinary moments special,
+            and I simply love having you in my life. 🌹
+        </p>
+
+        <p>
+            So today, I just want to ask you something
+            straight from my heart...
+        </p>
+
+    </div>
+
+    <div class="question">
+        Will you be mine? ❤️
+    </div>
+
+    <div class="buttons">
+        <button class="yes" onclick="yesClicked()">
+            YES ❤️
+        </button>
+
+        <button class="no" onclick="noClicked()">
+            Let me think 😌
+        </button>
+    </div>
+
+</div>
+
+
+<script>
+
+    const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycby1zA1TbYbuY4n6aG99Vqko4a1OGCtAYBne7gY26eooPlYxjubpxd7vpRGZO6Y_gTxo8g/exec";
+    
+    const envelope = document.getElementById("envelope");
+    const letter = document.getElementById("letter");
+    
+    envelope.addEventListener("click", function() {
+    
+        envelope.classList.add("open");
+    
+        setTimeout(() => {
+            letter.classList.add("show");
+        }, 1300);
+    
+    });
+    
+    
+    function sendAnswer(answer) {
+    
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "answer=" + encodeURIComponent(answer)
+        });
+    
+    }
+    
+    
+    function yesClicked() {
+    
+        // Google Sheet में YES भेजना
+        sendAnswer("YES");
+    
+        letter.innerHTML = `
+            <h1>She Said YES! ❤️🥹</h1>
+    
+            <div style="font-size:80px;">
+                💕🌹💍
+            </div>
+    
+            <p class="message">
+                You just made me the happiest person alive. ❤️
+                <br><br>
+                I promise to always respect you,
+                support you and make as many beautiful memories
+                with you as possible.
+                <br><br>
+                Here's to our story... ❤️
+            </p>
+        `;
+    
+    }
+    
+    
+    function noClicked() {
+    
+        // Google Sheet में NO भेजना
+        sendAnswer("NO");
+    
+        alert("Take your time... I'll wait ❤️😊");
+    
+    }
+    
+    </script>
+
+</body>
+</html>
